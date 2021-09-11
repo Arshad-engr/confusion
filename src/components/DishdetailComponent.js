@@ -27,7 +27,7 @@ function  RenderDish({dish}){
         }
     }
 
-    function RenderComments({comments, addComment, dishId}){
+    function RenderComments({comments, postComment, dishId}){
         
         if(comments!=null)
         {
@@ -53,7 +53,7 @@ function  RenderDish({dish}){
                     
                   }) }
                     </ul>
-                    <CommentForm dishId={dishId} addComment={addComment} />
+                    <CommentForm dishId={dishId} postComment={postComment} />
                 </div>
            
             );
@@ -102,7 +102,7 @@ function  RenderDish({dish}){
                  <div className="row">
                    <RenderDish dish={props.dish} />
                     <RenderComments comments = {props.comments}
-                    addComment={props.addComment}
+                    postComment={props.postComment}
                     dishId={props.dish.id} />
                  </div>
                 </div>
@@ -144,7 +144,7 @@ export class CommentForm extends Component {
     }
 
     handleSubmit(values){
-        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
+        this.props.postComment(this.props.dishId, values.rating, values.author, values.comment);
      
     }
     
