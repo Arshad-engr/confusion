@@ -1,17 +1,37 @@
 import React from 'react';
 import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { Loading } from './LoadingComponent';
+import { baseUrl } from '../shared/baseUrl';
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 
-function RenderLeader({leader}){
+function RenderLeader({leader,isLoading, errMess}){
+    if(isLoading){
+        return (
+            <Loading />
+        );
+    }
+    else if(errMess){
+        return (
+            <h4>{errMess}</h4>
+        );
+    }
+    else
          return (
+           
             <Media list key={leader.id}>
-                <Media  src={leader.image} alt={leader.name} />
+                <Stagger in>
+                <Fade in>
+                <Media  src={baseUrl + leader.image} alt={leader.name} />
                 <Media body style={{marginTop:-109}}>
                       <Media heading style={{marginLeft:142}}> {leader.name} </Media>
                       <Media style={{marginLeft:142}}>{leader.designation}</Media>
                       <Media style={{marginLeft:142,marginTop:13}}>{leader.description}</Media>
                 </Media>
+                </Fade>
+                </Stagger>
              </Media>
+            
          );
 }
 
@@ -19,7 +39,10 @@ function About(props) {
 
     const leaders = props.leaders.map((leader) => {
         return (
-            <RenderLeader leader={leader} />
+            <RenderLeader leader={leader}
+                          isLoading={props.leadersLoading}
+                          errMess={props.leadersErrMess}
+             />
         );
     });
 
